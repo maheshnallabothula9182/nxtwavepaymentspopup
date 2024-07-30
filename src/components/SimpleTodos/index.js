@@ -1,4 +1,4 @@
-import {Component} from 'react'
+import React, {Component} from 'react'
 import TodoItem from '../TodoItem'
 import './index.css'
 
@@ -60,6 +60,34 @@ class SimpleTodos extends Component {
     })
   }
 
+  editTodo = id => {
+    const {todosList} = this.state
+    const updatedTodosList = todosList.map(eachTodo => {
+      if (eachTodo.id === id) {
+        return {...eachTodo, isEditing: !eachTodo.isEditing}
+      }
+      return eachTodo
+    })
+
+    this.setState({
+      todosList: updatedTodosList,
+    })
+  }
+
+  saveTodo = (id, newTitle) => {
+    const {todosList} = this.state
+    const updatedTodosList = todosList.map(eachTodo => {
+      if (eachTodo.id === id) {
+        return {...eachTodo, title: newTitle, isEditing: false}
+      }
+      return eachTodo
+    })
+
+    this.setState({
+      todosList: updatedTodosList,
+    })
+  }
+
   toggleTodoCompletion = id => {
     const {todosList} = this.state
     const updatedTodosList = todosList.map(eachTodo => {
@@ -80,14 +108,17 @@ class SimpleTodos extends Component {
 
   addNewTodo = () => {
     const {todosList, newTodoItem} = this.state
+    const [title, count] = newTodoItem.split(' ')
+    const todoCount = Number(count) || 1
     const newId = todosList.length ? todosList[todosList.length - 1].id + 1 : 1
-    const newTodo = {
-      id: newId,
-      title: newTodoItem,
+    const newTodos = Array.from({length: todoCount}, (_, index) => ({
+      id: newId + index,
+      title,
       completed: false,
-    }
+      isEditing: false,
+    }))
     this.setState({
-      todosList: [...todosList, newTodo],
+      todosList: [...todosList, ...newTodos],
       newTodoItem: '',
     })
   }
@@ -102,7 +133,7 @@ class SimpleTodos extends Component {
           <div className="new-todo-cont">
             <input
               className="new-todo"
-              placeholder="Add new todo item"
+              placeholder="Add new todo item (title count)"
               value={newTodoItem}
               onChange={this.onChangeInput}
             />
@@ -116,6 +147,8 @@ class SimpleTodos extends Component {
                 key={eachTodo.id}
                 todoDetails={eachTodo}
                 deleteTodo={this.deleteTodo}
+                editTodo={this.editTodo}
+                saveTodo={this.saveTodo}
                 toggleTodoCompletion={this.toggleTodoCompletion}
               />
             ))}
