@@ -1,1 +1,54 @@
 /* Write your CSS here */
+.app-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.simple-todos-container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 400px;
+}
+
+.heading {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.new-todo-cont {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.new-todo,
+.new-todo-count {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 60%;
+}
+
+.new-todo-count {
+  width: 30%;
+}
+
+.add-btn {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.todos-list {
+  list-style: none;
+  padding: 0;
+}
